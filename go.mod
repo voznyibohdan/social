@@ -3,14 +3,17 @@ module github.com/voznyibohdan/social
 go 1.25.4
 
 require (
+	github.com/caarlos0/env/v11 v11.3.1
+	github.com/go-chi/chi/v5 v5.2.3
+)
+
+require (
 	dario.cat/mergo v1.0.2 // indirect
 	github.com/air-verse/air v1.63.4 // indirect
 	github.com/bep/godartsass/v2 v2.5.0 // indirect
 	github.com/bep/golibsass v1.2.0 // indirect
-	github.com/caarlos0/env/v11 v11.3.1 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
-	github.com/go-chi/chi/v5 v5.2.3 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/gohugoio/hugo v0.149.1 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
