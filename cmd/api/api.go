@@ -9,11 +9,7 @@ import (
 )
 
 type application struct {
-	config config
-}
-
-type config struct {
-	addr string
+	config *config
 }
 
 func (app *application) mount() http.Handler {
@@ -34,7 +30,7 @@ func (app *application) mount() http.Handler {
 
 func (app *application) serve(handler http.Handler) error {
 	srv := &http.Server{
-		Addr:         app.config.addr,
+		Addr:         app.config.Server.Addr,
 		Handler:      handler,
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  5 * time.Second,

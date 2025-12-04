@@ -3,12 +3,8 @@ package main
 import "log"
 
 func main() {
-	cfg := config{
-		addr: ":8080",
-	}
-
 	app := &application{
-		config: cfg,
+		config: loadConfig(),
 	}
 
 	log.Fatal(app.serve(app.mount()))
