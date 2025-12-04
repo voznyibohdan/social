@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"net/http"
 	"time"
 
@@ -12,6 +13,7 @@ import (
 type application struct {
 	config  *config
 	storage *storage.Storage
+	db      *sql.DB
 }
 
 func (app *application) mount() http.Handler {
