@@ -1,10 +1,15 @@
 package main
 
-import "log"
+import (
+	"log"
+
+	"github.com/voznyibohdan/social/internal/storage"
+)
 
 func main() {
 	app := &application{
-		config: loadConfig(),
+		config:  loadConfig(),
+		storage: storage.NewPostgresStorage(nil),
 	}
 
 	log.Fatal(app.serve(app.mount()))
