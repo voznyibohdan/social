@@ -20,7 +20,7 @@ func main() {
 
 	app := &application{
 		config:  cfg,
-		storage: storage.NewPostgresStorage(nil),
+		storage: storage.NewPostgresStorage(database),
 		db:      database,
 	}
 

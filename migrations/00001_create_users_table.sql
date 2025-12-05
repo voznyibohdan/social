@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS users
     email      citext UNIQUE                NOT NULL,
     username   TEXT UNIQUE                 NOT NULL,
     password   BYTEA                       NOT NULL,
-    created_at TIMESTAMP(0) WITH TIME ZONE NOT NULL DEFAULT NOW()
+    created_at TIMESTAMP(0) WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP(0) WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
 
 -- +goose Down

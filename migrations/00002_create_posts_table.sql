@@ -5,7 +5,9 @@ CREATE TABLE IF NOT EXISTS posts
     title      TEXT                        NOT NULL,
     user_id    BIGINT                      NOT NULL,
     created_at TIMESTAMP(0) WITH TIME ZONE NOT NULL DEFAULT NOW(),
-    content    TEXT                        NOT NULL
+    updated_at TIMESTAMP(0) WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    content    TEXT                        NOT NULL,
+    tags       TEXT[]                      NOT NULL
 );
 
 -- +goose Down

@@ -11,6 +11,7 @@ type User struct {
 	Email     string `json:"email"`
 	Password  string `json:"-"`
 	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
 }
 
 type UsersStorage interface {
@@ -29,11 +30,11 @@ func (s *PostgresUsersStorage) Create(ctx context.Context, user *User) error {
 	query := `
 	INSERT INTO users (username, email, password) 
 	VALUES ($1, $2, $3)
-	RETURNING id, created_at`
+	RETURNING id, created_at, updated_at`
 
 	args := []any{user.Username, user.Email, user.Password}
 
-	err := s.db.QueryRowContext(ctx, query, args...).Scan(&user.ID, &user.CreatedAt)
+	err := s.db.QueryRowContext(ctx, query, args...).Scan(&user.ID, &user.CreatedAt, &user.UpdatedAt)
 	if err != nil {
 		return err
 	}

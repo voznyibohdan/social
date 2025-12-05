@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -13,8 +14,7 @@ func (app *application) writeJSON(w http.ResponseWriter, status int, data any) e
 }
 
 func (app *application) readJSON(w http.ResponseWriter, r *http.Request, data any) error {
-	maxBytes := 1 << 30 // 1MB
-	r.Body = http.MaxBytesReader(w, r.Body, int64(maxBytes))
+	r.Body = http.MaxBytesReader(w, r.Body, 1<<30) // 1MB
 
 	dec := json.NewDecoder(r.Body)
 	dec.DisallowUnknownFields()
@@ -22,6 +22,7 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, data an
 	return dec.Decode(data)
 }
 
-func (app *application) writeJSONError(w http.ResponseWriter, status int, message string) error {
-	return app.writeJSON(w, status, map[string]string{"error": message})
+func (app *application) writeJSONError(w http.ResponseWriter, status int, message string) {
+	err := app.writeJSON(w, status, map[string]string{"error": message})
+	log.Println(err)
 }
