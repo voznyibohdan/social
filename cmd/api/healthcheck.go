@@ -1,7 +1,12 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+)
 
 func (app *application) healthcheck(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("ok"))
+	err := app.writeJSON(w, http.StatusOK, map[string]string{"status": "ok"})
+	if err != nil {
+		app.writeJSONError(w, http.StatusInternalServerError, err.Error())
+	}
 }
