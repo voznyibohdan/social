@@ -19,6 +19,7 @@ type Post struct {
 
 type PostsStorage interface {
 	Create(context.Context, *Post) error
+	GetOneByID(context.Context, int64) (*Post, error)
 }
 
 type PostgresPostsStorage struct {
@@ -43,4 +44,27 @@ func (s *PostgresPostsStorage) Create(ctx context.Context, post *Post) error {
 	}
 
 	return nil
+}
+
+func (s *PostgresPostsStorage) GetOneByID(ctx context.Context, id int64) (*Post, error) {
+	query := `
+		SELECT id, user_id, content, title, created_at, updated_at, tags 
+		FROM posts 
+		WHERE id = $1`
+
+	var post Post
+	err := s.db.QueryRowContext(ctx, query, id).Scan(
+		&post.ID,
+		&post.UserID,
+		&post.Content,
+		&post.Title,
+		&post.CreatedAt,
+		&post.UpdatedAt,
+		pq.Array(&post.Tags),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &post, nil
 }

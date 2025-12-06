@@ -18,10 +18,14 @@ func main() {
 	defer database.Close()
 	log.Println("database connection pool established")
 
+	validate, trans := initValidator()
+
 	app := &application{
-		config:  cfg,
-		storage: storage.NewPostgresStorage(database),
-		db:      database,
+		config:   cfg,
+		storage:  storage.NewPostgresStorage(database),
+		db:       database,
+		validate: validate,
+		trans:    trans,
 	}
 
 	log.Fatal(app.serve(app.mount()))

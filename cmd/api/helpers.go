@@ -4,7 +4,21 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
+
+	"github.com/go-chi/chi/v5"
 )
+
+func (app *application) readIDParam(r *http.Request) (int64, error) {
+	param := chi.URLParam(r, "id")
+
+	id, err := strconv.Atoi(param)
+	if err != nil || id < 1 {
+		return 0, err
+	}
+
+	return int64(id), nil
+}
 
 func (app *application) writeJSON(w http.ResponseWriter, status int, data any) error {
 	w.Header().Set("Content-Type", "application/json")

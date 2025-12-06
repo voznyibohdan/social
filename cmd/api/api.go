@@ -7,13 +7,17 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	ut "github.com/go-playground/universal-translator"
+	"github.com/go-playground/validator/v10"
 	"github.com/voznyibohdan/social/internal/storage"
 )
 
 type application struct {
-	config  *config
-	storage *storage.Storage
-	db      *sql.DB
+	config   *config
+	storage  *storage.Storage
+	db       *sql.DB
+	validate *validator.Validate
+	trans    ut.Translator
 }
 
 func (app *application) mount() http.Handler {
@@ -30,6 +34,7 @@ func (app *application) mount() http.Handler {
 
 		r.Route("/posts", func(r chi.Router) {
 			r.Post("/", app.createPostHandler)
+			r.Get("/{id}", app.getPostByID)
 		})
 	})
 
